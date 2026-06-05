@@ -1,0 +1,99 @@
+<section class="page-shell user-page">
+  <header class="user-header">
+    <div>
+      <p class="eyebrow">Administración</p>
+      <h1>Gestión de usuarios</h1>
+      <p>Gestiona accesos de estudiantes, docentes y personal de apoyo.</p>
+    </div>
+
+    <div class="user-header__actions">
+      <app-ui-button variant="secondary">Exportar</app-ui-button>
+      <app-ui-button (pressed)="toggleCreateForm()">Agregar usuario</app-ui-button>
+    </div>
+  </header>
+
+  <section class="panel" *ngIf="showCreateForm">
+    <h2>Agregar nuevo usuario</h2>
+
+    <div class="filters">
+      <input
+        type="text"
+        placeholder="RUT sin puntos ni guion. Ej: 123456789"
+        [(ngModel)]="newUser.rut"
+        name="rut"
+      />
+
+      <input
+        type="text"
+        placeholder="Nombre completo"
+        [(ngModel)]="newUser.name"
+        name="name"
+      />
+
+      <input
+        type="email"
+        placeholder="Correo institucional"
+        [(ngModel)]="newUser.email"
+        name="email"
+      />
+
+      <input
+        type="password"
+        placeholder="Contraseña"
+        [(ngModel)]="newUser.password"
+        name="password"
+      />
+
+      <select [(ngModel)]="newUser.userType" name="userType">
+        <option>Estudiante</option>
+        <option>Docente</option>
+        <option>Funcionario</option>
+        <option>Deportista</option>
+        <option>Externo</option>
+      </select>
+    </div>
+
+    <p *ngIf="successMessage" style="color: green;">
+      {{ successMessage }}
+    </p>
+
+    <p *ngIf="errorMessage" style="color: red;">
+      {{ errorMessage }}
+    </p>
+
+    <app-ui-button
+      [fullWidth]="false"
+      (pressed)="createUser()"
+    >
+      {{ isLoading ? 'Registrando...' : 'Guardar usuario' }}
+    </app-ui-button>
+  </section>
+
+  <section class="panel filters">
+    <input type="text" value="" placeholder="Buscar por nombre, RUT o ID..." />
+    <select>
+      <option>Todos los tipos</option>
+      <option>Estudiante</option>
+      <option>Docente</option>
+      <option>Funcionario</option>
+    </select>
+    <select>
+      <option>Todos los estados</option>
+      <option>Activo</option>
+      <option>Inactivo</option>
+    </select>
+  </section>
+
+  <section class="panel table-wrapper">
+    <app-simple-table [columns]="columns" [rows]="rows" />
+
+    <footer>
+      <p>Mostrando usuarios registrados en el sistema</p>
+      <div class="pagination">
+        <button type="button" class="active">1</button>
+        <button type="button">2</button>
+        <button type="button">3</button>
+      </div>
+    </footer>
+  </section>
+</section>

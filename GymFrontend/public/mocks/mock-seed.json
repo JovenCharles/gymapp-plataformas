@@ -1,0 +1,111 @@
+{
+  "noticeTemplates": [
+    {
+      "title": "Mantenimiento",
+      "message": "Cierre parcial de piscina este viernes entre 14:00 y 18:00 hrs.",
+      "tone": "danger"
+    },
+    {
+      "title": "Nueva clase",
+      "message": "Inscripciones abiertas para Cross Training avanzado. Cupos limitados.",
+      "tone": "primary"
+    },
+    {
+      "title": "Actualización",
+      "message": "Desde la próxima semana la sala abre a las 06:30 hrs.",
+      "tone": "primary"
+    },
+    {
+      "title": "Recordatorio",
+      "message": "Recuerda registrar tu ingreso con QR antes de cada bloque.",
+      "tone": "primary"
+    }
+  ],
+  "activities": [
+    "Sala de Pesas Libre",
+    "Cardio y Spinning",
+    "Entrenamiento Funcional",
+    "Natación Técnica",
+    "Cross Training",
+    "Movilidad y Recuperación"
+  ],
+  "zones": [
+    "Zona de Pesas Libres",
+    "Piscina Olímpica",
+    "Sala de Máquinas",
+    "Zona Funcional",
+    "Cancha Multiuso"
+  ],
+  "facilities": [
+    "Sala de Pesas Principal",
+    "Centro Acuático",
+    "Cancha 2",
+    "Zona de Rehabilitación",
+    "Sala de Cardio",
+    "Pista Indoor"
+  ],
+  "userPool": [
+    {
+      "name": "Camila Herrera",
+      "email": "camila.herrera@universidad.edu",
+      "rut": "19.324.111-2",
+      "faculty": "Facultad de Ciencias del Deporte",
+      "career": "Kinesiología y Ciencias del Ejercicio",
+      "studentId": "10492847",
+      "campus": "Campus Atlético Central"
+    },
+    {
+      "name": "Mateo Silva",
+      "email": "mateo.silva@universidad.edu",
+      "rut": "18.912.553-7",
+      "faculty": "Facultad de Ingeniería",
+      "career": "Ingeniería Civil Industrial",
+      "studentId": "10933712",
+      "campus": "Campus Norte"
+    },
+    {
+      "name": "Elena Rodríguez",
+      "email": "elena.rodriguez@universidad.edu",
+      "rut": "17.880.143-0",
+      "faculty": "Facultad de Salud",
+      "career": "Nutrición y Dietética",
+      "studentId": "10218842",
+      "campus": "Campus Salud"
+    },
+    {
+      "name": "Sofía Chen",
+      "email": "sofia.chen@universidad.edu",
+      "rut": "20.108.670-9",
+      "faculty": "Facultad de Arquitectura",
+      "career": "Diseño",
+      "studentId": "11500210",
+      "campus": "Campus Creativo"
+    },
+    {
+      "name": "David Rojas",
+      "email": "david.rojas@universidad.edu",
+      "rut": "18.007.980-6",
+      "faculty": "Facultad de Educación",
+      "career": "Pedagogía en Educación Física",
+      "studentId": "9982441",
+      "campus": "Campus Sur"
+    },
+    {
+      "name": "Valentina Díaz",
+      "email": "valentina.diaz@universidad.edu",
+      "rut": "19.004.671-3",
+      "faculty": "Facultad de Ciencias",
+      "career": "Bioquímica",
+      "studentId": "11230198",
+      "campus": "Campus Investigación"
+    }
+  ],
+  "adminAccessNotes": [
+    "Student Athlete ID",
+    "General Admission",
+    "RFID Error / Expired",
+    "Staff ID",
+    "Temporary Pass"
+  ],
+  "userTypes": ["Estudiante", "Docente", "Funcionario"]
+}

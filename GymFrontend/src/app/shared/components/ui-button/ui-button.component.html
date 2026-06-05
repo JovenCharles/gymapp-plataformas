@@ -1,0 +1,13 @@
+<button
+  [attr.type]="type"
+  class="ui-button"
+  [class.ui-button--secondary]="variant === 'secondary'"
+  [class.ui-button--ghost]="variant === 'ghost'"
+  [class.ui-button--sm]="size === 'sm'"
+  [class.ui-button--lg]="size === 'lg'"
+  [class.ui-button--full]="fullWidth"
+  [disabled]="disabled"
+  (click)="onClick()"
+>
+  <ng-content />
+</button>

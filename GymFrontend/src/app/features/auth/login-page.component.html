@@ -1,0 +1,84 @@
+<section class="login-page">
+  <div class="login-card">
+    <header>
+      <h1>GyMaster</h1>
+      <p>(nombre provisorio)</p>
+    </header>
+
+    <div class="field" *ngIf="selectedRole === 'student'">
+      <label for="rut">RUT</label>
+      <input
+        id="rut"
+        type="text"
+        placeholder="Ej: 123456789"
+        [(ngModel)]="studentName"
+        name="rut"
+      />
+    </div>
+
+    <div class="field">
+      <label for="email">Correo institucional</label>
+      <input
+        id="email"
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+      />
+    </div>
+
+    <div class="field">
+      <div class="field__row">
+        <label for="password">Contraseña</label>
+        <a href="#">¿Olvidaste tu contraseña?</a>
+      </div>
+      <input
+        id="password"
+        type="password"
+        placeholder="Ingresa tu contraseña"
+        [(ngModel)]="password"
+        name="password"
+      />
+    </div>
+
+    <p *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </p>
+
+    <div class="role-switch">
+      <p>Perfil demo</p>
+      <div class="role-switch__buttons">
+        <button
+          type="button"
+          class="role-chip"
+          [class.role-chip--active]="selectedRole === 'student'"
+          (click)="pickRole('student')"
+        >
+          Estudiante
+        </button>
+        <button
+          type="button"
+          class="role-chip"
+          [class.role-chip--active]="selectedRole === 'admin'"
+          (click)="pickRole('admin')"
+        >
+          Administrador
+        </button>
+      </div>
+    </div>
+
+    <p class="session-preview">
+      Ingresarás como:
+      <strong>{{ selectedRole === 'admin' ? 'Admin' : (studentName.trim() || 'Usuario') }}</strong>
+    </p>
+
+    <app-ui-button
+      size="lg"
+      [fullWidth]="true"
+      (pressed)="enter()"
+    >
+      {{ isLoading ? 'Ingresando...' : 'Ingresar' }}
+    </app-ui-button>
+
+    <p class="support">¿No tienes cuenta? <a href="#">Contacta al administrador</a></p>
+  </div>
+</section>

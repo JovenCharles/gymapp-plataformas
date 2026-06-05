@@ -1,0 +1,97 @@
+.section-hero h1 {
+  margin: 0.15rem 0 0;
+  font-size: clamp(2rem, 6vw, 4rem);
+  letter-spacing: -0.03em;
+}
+
+.section-hero p {
+  margin: 0.72rem 0 0;
+  max-width: 52rem;
+  color: var(--text-soft);
+}
+
+.section-hero__eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--brand);
+}
+
+.day-tabs {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-top: 1.4rem;
+}
+
+.day-tab {
+  border: 0;
+  border-radius: 0.84rem;
+  background: var(--surface-elevated);
+  color: var(--text-soft);
+  padding: 0.8rem 1.35rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.day-tab--active {
+  color: #fff;
+  background: linear-gradient(150deg, var(--brand), #2b4fc4);
+  box-shadow: var(--shadow-soft);
+}
+
+.schedule-grid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.slot-card {
+  background: #fff;
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-lg);
+  padding: 1.2rem;
+  border-left: 4px solid var(--brand);
+}
+
+.slot-card--disabled {
+  opacity: 0.68;
+}
+
+.slot-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+
+.slot-card h3 {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.07;
+}
+
+.slot-card__zone {
+  margin: 0.65rem 0 0;
+  color: var(--text-soft);
+}
+
+.slot-card__slots {
+  margin: 0.7rem 0 1rem;
+  font-weight: 700;
+}
+
+@media (max-width: 1280px) {
+  .schedule-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .schedule-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,125 @@
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background:
+    linear-gradient(135deg, rgba(21, 53, 140, 0.82), rgba(90, 117, 191, 0.82)),
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.22), transparent 58%),
+    radial-gradient(circle at 78% 70%, rgba(255, 255, 255, 0.19), transparent 45%),
+    #223a8f;
+}
+
+.login-card {
+  width: min(100%, 30rem);
+  background: rgba(245, 247, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 1rem;
+  box-shadow: 0 18px 48px rgba(20, 37, 89, 0.25);
+  padding: 2.2rem;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 1.9rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 2.7rem);
+  color: var(--brand);
+}
+
+header p {
+  margin: 0.3rem 0 0;
+  color: var(--text-soft);
+}
+
+.field {
+  display: grid;
+  gap: 0.48rem;
+  margin-bottom: 1.1rem;
+}
+
+label {
+  font-weight: 700;
+}
+
+input {
+  width: 100%;
+  border: 1px solid var(--stroke);
+  border-radius: 0.72rem;
+  background: #fff;
+  font: inherit;
+  padding: 0.9rem 0.95rem;
+}
+
+input:focus {
+  outline: 2px solid rgba(24, 77, 193, 0.24);
+  border-color: var(--brand);
+}
+
+.field__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.field__row a,
+.support a {
+  color: var(--brand);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.role-switch {
+  margin: 0.7rem 0 0.6rem;
+}
+
+.role-switch p {
+  margin: 0 0 0.45rem;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+.role-switch__buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.role-chip {
+  border: 1px solid var(--stroke-strong);
+  border-radius: 0.72rem;
+  background: #fff;
+  color: var(--text-soft);
+  font: inherit;
+  font-weight: 700;
+  padding: 0.62rem 0.7rem;
+  cursor: pointer;
+}
+
+.role-chip--active {
+  border-color: var(--brand);
+  color: var(--brand);
+  background: #e9efff;
+}
+
+.session-preview {
+  margin: 0 0 1rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 0.72rem;
+  background: #e9eefb;
+  color: var(--text-soft);
+}
+
+.session-preview strong {
+  color: var(--text-main);
+}
+
+.support {
+  margin: 1.2rem 0 0;
+  text-align: center;
+  color: var(--text-soft);
+}

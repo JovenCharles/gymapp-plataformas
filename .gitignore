@@ -1,0 +1,22 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+
+# VS Code
+.vscode/
+
+# Docker / runtime
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+
+*.db

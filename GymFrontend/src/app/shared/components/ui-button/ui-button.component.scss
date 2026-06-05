@@ -1,0 +1,51 @@
+.ui-button {
+  border: 0;
+  border-radius: 0.85rem;
+  padding: 0.8rem 1.2rem;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(145deg, var(--brand), #284fc4);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: 170ms ease;
+}
+
+.ui-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+.ui-button:disabled {
+  background: #d0d4e3;
+  color: #8b91a8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.ui-button--secondary {
+  background: #edf0fb;
+  color: var(--brand);
+  box-shadow: none;
+}
+
+.ui-button--ghost {
+  background: transparent;
+  color: var(--brand);
+  box-shadow: none;
+  border: 1px solid var(--stroke-strong);
+}
+
+.ui-button--sm {
+  padding: 0.6rem 0.95rem;
+  border-radius: 0.72rem;
+  font-size: 0.9rem;
+}
+
+.ui-button--lg {
+  padding: 0.96rem 1.25rem;
+}
+
+.ui-button--full {
+  width: 100%;
+}

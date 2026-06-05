@@ -1,0 +1,111 @@
+.user-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.user-header h1 {
+  margin: 0.3rem 0 0;
+  font-size: clamp(2.25rem, 6vw, 4.3rem);
+}
+
+.user-header p {
+  margin: 0.6rem 0 0;
+  color: var(--text-soft);
+  max-width: 46rem;
+}
+
+.user-header__actions {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 13rem 13rem;
+  gap: 0.8rem;
+}
+
+.filters input,
+.filters select {
+  width: 100%;
+  border: 1px solid var(--stroke);
+  border-radius: 0.75rem;
+  background: #fff;
+  font: inherit;
+  padding: 0.8rem 0.9rem;
+}
+
+.table-wrapper {
+  padding: 0;
+}
+
+.table-wrapper app-simple-table {
+  display: block;
+}
+
+footer {
+  border-top: 1px solid var(--stroke);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1rem;
+}
+
+footer p {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+.pagination {
+  display: inline-flex;
+  gap: 0.38rem;
+}
+
+.pagination button {
+  width: 2.2rem;
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+  border: 1px solid var(--stroke);
+  background: #fff;
+  font: inherit;
+  font-weight: 700;
+  color: var(--text-soft);
+  cursor: pointer;
+}
+
+.pagination button.active {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #fff;
+}
+
+@media (max-width: 1120px) {
+  .user-header {
+    flex-direction: column;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+  }
+}

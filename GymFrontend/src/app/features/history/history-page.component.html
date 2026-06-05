@@ -1,0 +1,35 @@
+<section class="page-shell">
+  <header class="history-header">
+    <div>
+      <h1>Historial de asistencia</h1>
+      <p>Registra tu compromiso académico y deportivo con un historial completo de accesos.</p>
+    </div>
+
+    <div class="history-filters">
+      <button class="active" type="button">Últimos 7 días</button>
+      <button type="button">Último mes</button>
+      <button type="button">Todo</button>
+    </div>
+  </header>
+
+  <div class="history-stats">
+    <app-stat-card
+      *ngFor="let stat of mockData.historyStats; let first = first"
+      [title]="stat.title"
+      [value]="stat.value"
+      [helper]="stat.helper"
+      [accent]="first"
+    />
+  </div>
+
+  <section class="panel table-panel">
+    <header class="table-panel__header">
+      <h2>Registros recientes</h2>
+      <button type="button">Exportar</button>
+    </header>
+
+    <app-simple-table [columns]="columns" [rows]="rows" />
+
+    <footer class="table-panel__footer">Cargar más</footer>
+  </section>
+</section>

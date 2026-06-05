@@ -1,0 +1,6 @@
+@GymBackend_HostAddress = http://localhost:5008
+
+GET {{GymBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

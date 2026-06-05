@@ -1,0 +1,5 @@
+<article class="stat-card" [class.stat-card--accent]="accent">
+  <p class="stat-card__title">{{ title }}</p>
+  <h3>{{ value }}</h3>
+  <p class="stat-card__helper" *ngIf="helper">{{ helper }}</p>
+</article>

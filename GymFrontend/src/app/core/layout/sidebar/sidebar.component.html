@@ -1,0 +1,46 @@
+<aside class="sidebar" [class.sidebar--open]="open">
+  <div class="brand">
+    <div class="brand__logo">G</div>
+    <div>
+      <h2>{{ platformName }}</h2>
+      <p>{{ platformSubtitle }}</p>
+    </div>
+  </div>
+
+  <nav class="nav-section">
+    <a
+      *ngFor="let item of userNav"
+      [routerLink]="item.route"
+      routerLinkActive="nav-link--active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="nav-link"
+      (click)="onNavigate()"
+    >
+      <span class="nav-link__icon">{{ item.icon }}</span>
+      <span>{{ item.label }}</span>
+    </a>
+  </nav>
+
+  <section class="nav-section" *ngIf="adminNav.length > 0">
+    <p class="nav-section__title">Administración</p>
+    <a
+      *ngFor="let item of adminNav"
+      [routerLink]="item.route"
+      routerLinkActive="nav-link--active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="nav-link"
+      (click)="onNavigate()"
+    >
+      <span class="nav-link__icon">{{ item.icon }}</span>
+      <span>{{ item.label }}</span>
+    </a>
+  </section>
+
+  <div class="profile">
+    <div class="profile__avatar">{{ profileName.slice(0, 1) }}</div>
+    <div>
+      <p class="profile__name">{{ profileName }}</p>
+      <p class="profile__meta">{{ profileRole }} · {{ profileCode }}</p>
+    </div>
+  </div>
+</aside>

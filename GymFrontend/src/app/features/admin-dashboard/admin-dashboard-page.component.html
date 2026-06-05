@@ -1,0 +1,32 @@
+<section class="page-shell">
+  <header class="admin-header">
+    <div>
+      <p class="eyebrow">Facility Overview</p>
+      <h1>System Status</h1>
+    </div>
+    <app-status-badge label="Live feed activo" tone="primary" />
+  </header>
+
+  <div class="admin-stats">
+    <app-stat-card
+      *ngFor="let stat of mockData.adminStats; let first = first"
+      [title]="stat.title"
+      [value]="stat.value"
+      [helper]="stat.helper"
+      [accent]="first"
+    />
+  </div>
+
+  <section class="panel access-panel">
+    <h2>Accesos recientes</h2>
+
+    <article class="access-item" *ngFor="let access of mockData.recentAccess">
+      <div>
+        <h3>{{ access.name }}</h3>
+        <p>{{ access.detail }}</p>
+      </div>
+      <p class="access-item__time">{{ access.timeAgo }}</p>
+      <app-status-badge [label]="access.status" [tone]="access.tone" />
+    </article>
+  </section>
+</section>

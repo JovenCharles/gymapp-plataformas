@@ -1,0 +1,143 @@
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--surface-muted);
+  border-right: 1px solid var(--stroke);
+  padding: 2rem 1.4rem;
+  z-index: 25;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+.brand h2 {
+  margin: 0;
+  letter-spacing: 0.08em;
+  font-size: 1.8rem;
+}
+
+.brand p {
+  margin: 0.2rem 0 0;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.74rem;
+}
+
+.brand__logo {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.9rem;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(140deg, var(--brand), #2854d0);
+}
+
+.nav-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.nav-section + .nav-section {
+  margin-top: 1.2rem;
+}
+
+.nav-section__title {
+  margin: 1.2rem 0 0.4rem;
+  padding: 0 0.3rem;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.nav-link {
+  color: var(--text-soft);
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem;
+  transition: 180ms ease;
+}
+
+.nav-link:hover {
+  background: #fff;
+  color: var(--text);
+}
+
+.nav-link--active {
+  background: #fff;
+  color: var(--brand);
+  box-shadow: var(--shadow-soft);
+}
+
+.nav-link__icon {
+  min-width: 2rem;
+  height: 2rem;
+  border-radius: 0.65rem;
+  display: grid;
+  place-items: center;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  background: var(--surface-elevated);
+  border: 1px solid var(--stroke);
+}
+
+.profile {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border-top: 1px solid var(--stroke);
+  padding-top: 1rem;
+}
+
+.profile__avatar {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 0.8rem;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, #dce4ff, #cfd8ff);
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.profile__name {
+  margin: 0;
+  font-weight: 700;
+}
+
+.profile__meta {
+  margin: 0.2rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.84rem;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    transform: translateX(-100%);
+    transition: transform 200ms ease;
+  }
+
+  .sidebar--open {
+    transform: translateX(0);
+  }
+}

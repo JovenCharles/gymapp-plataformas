@@ -1,0 +1,151 @@
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 6vw, 4.25rem);
+  letter-spacing: -0.03em;
+}
+
+.hero span {
+  color: var(--brand);
+}
+
+.hero p {
+  margin: 0.85rem 0 0;
+  color: var(--text-soft);
+  max-width: 46rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+}
+
+.membership-card {
+  min-height: 16rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.membership-card h2 {
+  margin: 0.5rem 0 2rem;
+  color: #fff;
+  font-size: clamp(1.7rem, 4vw, 3rem);
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.notice-card h3 {
+  margin: 0 0 1rem;
+}
+
+.notice-item {
+  border-left: 4px solid var(--brand);
+  background: var(--surface-elevated);
+  border-radius: 0.8rem;
+  padding: 0.9rem;
+}
+
+.notice-item + .notice-item {
+  margin-top: 0.8rem;
+}
+
+.notice-item--danger {
+  border-left-color: #cb2f2f;
+}
+
+.notice-item__title {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--brand);
+}
+
+.notice-item p {
+  margin: 0.35rem 0 0;
+}
+
+.blocks-section {
+  margin-top: 1.3rem;
+}
+
+.blocks-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.blocks-header h3 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.blocks-header p {
+  margin: 0.3rem 0 0;
+  color: var(--text-soft);
+}
+
+.block-item {
+  display: grid;
+  grid-template-columns: 6.2rem 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  background: var(--surface-elevated);
+  border: 1px solid var(--stroke);
+  border-radius: 0.95rem;
+  padding: 0.8rem;
+}
+
+.block-item + .block-item {
+  margin-top: 0.75rem;
+}
+
+.block-item--accent {
+  border-left: 4px solid var(--brand);
+}
+
+.block-item__date {
+  background: #fff;
+  border: 1px solid var(--stroke);
+  border-radius: 0.8rem;
+  padding: 0.75rem;
+  text-align: center;
+  font-weight: 800;
+  color: var(--brand);
+}
+
+.block-item h4 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.block-item p {
+  margin: 0.3rem 0 0;
+  color: var(--text-soft);
+}
+
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 740px) {
+  .block-item {
+    grid-template-columns: 1fr;
+  }
+
+  .blocks-header {
+    flex-direction: column;
+  }
+}

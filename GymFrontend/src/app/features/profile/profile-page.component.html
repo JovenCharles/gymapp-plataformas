@@ -1,0 +1,54 @@
+<section class="page-shell profile-page">
+  <header class="profile-hero panel">
+    <div class="profile-hero__avatar">ER</div>
+    <div>
+      <h1>{{ mockData.profileData.name }}</h1>
+      <p>{{ mockData.profileData.email }}</p>
+      <div class="chips">
+        <app-status-badge [label]="mockData.profileData.role" tone="primary" />
+        <app-status-badge [label]="mockData.profileData.faculty" tone="neutral" />
+      </div>
+    </div>
+  </header>
+
+  <div class="profile-grid">
+    <article class="panel info-card">
+      <h2>Perfil académico</h2>
+      <p><strong>Carrera</strong>{{ mockData.profileData.career }}</p>
+      <p><strong>ID estudiante</strong>{{ mockData.profileData.studentId }}</p>
+      <p><strong>Campus</strong>{{ mockData.profileData.campus }}</p>
+    </article>
+
+    <article class="panel prefs-card">
+      <h2>Preferencias</h2>
+
+      <label>
+        <div>
+          <strong>Apariencia modo oscuro</strong>
+          <span>Interfaz de bajo brillo</span>
+        </div>
+        <input type="checkbox" />
+      </label>
+
+      <label>
+        <div>
+          <strong>Notificaciones push</strong>
+          <span>Alertas de horarios y cupos</span>
+        </div>
+        <input type="checkbox" checked />
+      </label>
+
+      <label>
+        <div>
+          <strong>Resumen semanal</strong>
+          <span>Recibe actividad de tus visitas</span>
+        </div>
+        <input type="checkbox" />
+      </label>
+    </article>
+  </div>
+
+  <footer class="profile-footer">
+    <app-ui-button size="lg">Guardar cambios</app-ui-button>
+  </footer>
+</section>

@@ -1,0 +1,34 @@
+<section class="page-shell">
+  <header class="section-hero">
+    <p class="section-hero__eyebrow">Schedules & Reservations</p>
+    <h1>Asegura tu bloque de entrenamiento</h1>
+    <p>
+      Selecciona un día y reserva tu cupo en la instalación de alto rendimiento. La capacidad se gestiona
+      para asegurar condiciones óptimas.
+    </p>
+  </header>
+
+  <div class="day-tabs">
+    <button
+      *ngFor="let day of mockData.scheduleDays"
+      type="button"
+      [class.day-tab--active]="selectedDay === day"
+      class="day-tab"
+      (click)="pickDay(day)"
+    >
+      {{ day }}
+    </button>
+  </div>
+
+  <div class="schedule-grid">
+    <article class="slot-card" *ngFor="let slot of mockData.scheduleSlots" [class.slot-card--disabled]="!slot.enabled">
+      <div class="slot-card__top">
+        <h3>{{ slot.time }}</h3>
+        <app-status-badge [label]="slot.statusLabel" [tone]="slot.statusTone" />
+      </div>
+      <p class="slot-card__zone">{{ slot.zone }}</p>
+      <p class="slot-card__slots">{{ slot.slots }}</p>
+      <app-ui-button [disabled]="!slot.enabled">{{ slot.actionLabel }}</app-ui-button>
+    </article>
+  </div>
+</section>

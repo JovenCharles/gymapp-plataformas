@@ -1,0 +1,112 @@
+.profile-page {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.profile-hero {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  align-items: center;
+  gap: 1rem;
+  border-top: 2.8rem solid var(--brand);
+}
+
+.profile-hero__avatar {
+  width: 9rem;
+  aspect-ratio: 1;
+  border-radius: 1rem;
+  display: grid;
+  place-items: center;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(155deg, #556dac, #2d418f);
+  border: 4px solid #fff;
+  box-shadow: 0 8px 26px rgba(15, 30, 84, 0.2);
+}
+
+.profile-hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+}
+
+.profile-hero p {
+  margin: 0.25rem 0 0;
+  color: var(--text-soft);
+}
+
+.chips {
+  margin-top: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.info-card h2,
+.prefs-card h2 {
+  margin-top: 0;
+  font-size: 2.1rem;
+}
+
+.info-card p {
+  margin: 1.2rem 0 0;
+  color: var(--text-soft);
+  display: grid;
+  gap: 0.25rem;
+}
+
+.info-card strong {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.prefs-card label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.prefs-card label + label {
+  margin-top: 1.25rem;
+}
+
+.prefs-card strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.prefs-card span {
+  color: var(--text-soft);
+}
+
+.prefs-card input {
+  width: 2.95rem;
+  height: 1.7rem;
+  border-radius: 999px;
+}
+
+.profile-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 1080px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 740px) {
+  .profile-hero {
+    grid-template-columns: 1fr;
+  }
+}

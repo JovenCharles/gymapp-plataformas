@@ -1,0 +1,50 @@
+<section class="page-shell">
+  <header class="hero">
+    <h1>Hola, <span>{{ auth.activeProfile().name }}</span></h1>
+    <p>
+      Tu estado atlético está al máximo hoy. Revisa tu membresía y próximos bloques disponibles para
+      entrenar.
+    </p>
+  </header>
+
+  <div class="dashboard-grid">
+    <article class="membership-card panel panel--brand">
+      <p class="eyebrow">Estado de membresía</p>
+      <h2>Habilitado / Vigente</h2>
+      <a routerLink="/qr-access" class="link-reset">
+        <app-ui-button variant="secondary">Ver mi QR</app-ui-button>
+      </a>
+    </article>
+
+    <aside class="notice-card panel">
+      <h3>Avisos del Gimnasio</h3>
+      <article
+        *ngFor="let notice of mockData.dashboardNotices"
+        class="notice-item"
+        [class.notice-item--danger]="notice.tone === 'danger'"
+      >
+        <p class="notice-item__title">{{ notice.title }}</p>
+        <p>{{ notice.message }}</p>
+      </article>
+    </aside>
+  </div>
+
+  <section class="panel blocks-section">
+    <div class="blocks-header">
+      <div>
+        <h3>Próximos bloques libres</h3>
+        <p>Horarios disponibles para reserva hoy.</p>
+      </div>
+      <app-ui-button variant="secondary" size="sm">Ver agenda completa</app-ui-button>
+    </div>
+
+    <article class="block-item" *ngFor="let block of mockData.upcomingBlocks; let i = index" [class.block-item--accent]="i === 0">
+      <div class="block-item__date">{{ block.date }}</div>
+      <div class="block-item__content">
+        <h4>{{ block.activity }}</h4>
+        <p>{{ block.time }}</p>
+      </div>
+      <app-ui-button [disabled]="!block.enabled">Reservar</app-ui-button>
+    </article>
+  </section>
+</section>
