@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=gym.db"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -40,7 +40,31 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated();
+
+    var maxRetries = 10;
+    var retryDelay = TimeSpan.FromSeconds(3);
+
+    for (int i = 1; i <= maxRetries; i++)
+    {
+        try
+        {
+            db.Database.EnsureCreated();
+            Console.WriteLine("Base de datos inicializada correctamente.");
+            break;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Intento {i}/{maxRetries}: no se pudo conectar a la base de datos.");
+            Console.WriteLine(ex.Message);
+
+            if (i == maxRetries)
+            {
+                throw;
+            }
+
+            Thread.Sleep(retryDelay);
+        }
+    }
 }
 
 app.Run();
