@@ -50,6 +50,7 @@
 .table-panel {
   margin-top: 1.2rem;
   padding: 0;
+  overflow: hidden;
 }
 
 .table-panel__header {
@@ -78,12 +79,50 @@
   border: 0;
 }
 
-.table-panel__footer {
+.table-panel table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-panel th,
+.table-panel td {
+  padding: 0.9rem 1rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table-panel th {
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 800;
+}
+
+.table-panel tbody tr {
   border-top: 1px solid var(--stroke);
-  padding: 0.85rem 1rem;
-  text-align: center;
-  color: var(--brand);
-  font-weight: 700;
+}
+
+.reservation-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.reservation-cell span {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+}
+
+.table-panel p {
+  margin: 0;
+  padding: 1rem 1.2rem;
+  color: var(--text-soft);
+}
+
+.table-panel td > span {
+  color: var(--text-soft);
+  font-size: 0.9rem;
 }
 
 @media (max-width: 1180px) {
@@ -93,5 +132,13 @@
 
   .history-header {
     flex-direction: column;
+  }
+
+  .table-panel {
+    overflow-x: auto;
+  }
+
+  .table-panel table {
+    min-width: 760px;
   }
 }

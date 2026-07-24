@@ -1,35 +1,103 @@
 <section class="page-shell">
   <header class="history-header">
     <div>
-      <h1>Historial de asistencia</h1>
-      <p>Registra tu compromiso académico y deportivo con un historial completo de accesos.</p>
-    </div>
-
-    <div class="history-filters">
-      <button class="active" type="button">Últimos 7 días</button>
-      <button type="button">Último mes</button>
-      <button type="button">Todo</button>
+      <h1>Historial de reservas</h1>
+      <p>Revisa tus bloques reservados en la Sala de Pesas y cancela los que ya no utilizarás.</p>
     </div>
   </header>
 
   <div class="history-stats">
     <app-stat-card
-      *ngFor="let stat of mockData.historyStats; let first = first"
-      [title]="stat.title"
-      [value]="stat.value"
-      [helper]="stat.helper"
-      [accent]="first"
+      title="Reservas activas"
+      [value]="activeReservationsCount.toString()"
+      helper="Bloques vigentes"
+      [accent]="true"
+    />
+
+    <app-stat-card
+      title="Reservas canceladas"
+      [value]="canceledReservationsCount.toString()"
+      helper="Bloques anulados"
+    />
+
+    <app-stat-card
+      title="Total reservas"
+      [value]="totalReservationsCount.toString()"
+      helper="Historial completo"
     />
   </div>
 
+  <p *ngIf="successMessage" style="color: green;">
+    {{ successMessage }}
+  </p>
+
+  <p *ngIf="errorMessage" style="color: red;">
+    {{ errorMessage }}
+  </p>
+
   <section class="panel table-panel">
     <header class="table-panel__header">
-      <h2>Registros recientes</h2>
-      <button type="button">Exportar</button>
+      <h2>Mis reservas recientes</h2>
     </header>
 
-    <app-simple-table [columns]="columns" [rows]="rows" />
+    <p *ngIf="isLoading">
+      Cargando historial...
+    </p>
 
-    <footer class="table-panel__footer">Cargar más</footer>
+    <p *ngIf="!isLoading && reservations.length === 0">
+      Aún no tienes reservas registradas.
+    </p>
+
+    <table *ngIf="!isLoading && reservations.length > 0">
+      <thead>
+        <tr>
+          <th>Día y recinto</th>
+          <th>Horario</th>
+          <th>Fecha de creación</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let reservation of reservations">
+          <td>
+            <div class="reservation-cell">
+              <strong>{{ reservation.day }}</strong>
+              <span>{{ reservation.zone }}</span>
+            </div>
+          </td>
+
+          <td>
+            {{ reservation.startTime }} - {{ reservation.endTime }}
+          </td>
+
+          <td>
+            {{ reservation.createdAt | date:'dd/MM/yyyy HH:mm' }}
+          </td>
+
+          <td>
+            <app-status-badge
+              [label]="reservation.status"
+              [tone]="getStatusTone(reservation.status)"
+            />
+          </td>
+
+          <td>
+            <app-ui-button
+              *ngIf="canCancel(reservation)"
+              [disabled]="isCanceling"
+              (pressed)="cancelReservation(reservation)"
+            >
+              {{ isCanceling ? 'Cancelando...' : 'Cancelar' }}
+            </app-ui-button>
+
+            <span *ngIf="!canCancel(reservation)">
+              Sin acción
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 </section>
