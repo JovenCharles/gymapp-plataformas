@@ -84,6 +84,18 @@ export class LoginPageComponent {
       next: (response) => {
         const user = response.user;
 
+        if (this.selectedRole === 'admin' && user.role !== 'Admin') {
+          this.errorMessage = 'Este usuario no tiene permisos de administrador.';
+          this.cdr.detectChanges();
+          return;
+        }
+
+        if (this.selectedRole === 'student' && user.role === 'Admin') {
+          this.errorMessage = 'Este usuario corresponde a un perfil administrador.';
+          this.cdr.detectChanges();
+          return;
+        }
+
         if (user.role === 'Admin') {
           this.auth.loginAsAdmin();
         } else {
