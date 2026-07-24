@@ -50,6 +50,7 @@
         <option>Funcionario</option>
         <option>Deportista</option>
         <option>Externo</option>
+        <option>Administrador</option>
       </select>
     </div>
 
@@ -76,6 +77,9 @@
       <option>Estudiante</option>
       <option>Docente</option>
       <option>Funcionario</option>
+      <option>Deportista</option>
+      <option>Externo</option>
+      <option>Administrador</option>
     </select>
     <select>
       <option>Todos los estados</option>
@@ -85,7 +89,19 @@
   </section>
 
   <section class="panel table-wrapper">
-    <app-simple-table [columns]="columns" [rows]="rows" />
+    <p *ngIf="isLoadingUsers">
+      Cargando usuarios...
+    </p>
+
+    <p *ngIf="!isLoadingUsers && rows.length === 0">
+      No hay usuarios registrados.
+    </p>
+
+    <app-simple-table
+      *ngIf="!isLoadingUsers && rows.length > 0"
+      [columns]="columns"
+      [rows]="rows"
+    />
 
     <footer>
       <p>Mostrando usuarios registrados en el sistema</p>

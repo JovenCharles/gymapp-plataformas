@@ -36,22 +36,26 @@ public class AuthController : ControllerBase
             return BadRequest(new { message = "El RUT ya está registrado en el sistema." });
         }
 
+        var normalizedEmail = request.Email.Trim().ToLower();
+
         var emailExists = await _context.Users
-            .AnyAsync(u => u.Email == request.Email);
+            .AnyAsync(u => u.Email.ToLower() == normalizedEmail);
 
         if (emailExists)
         {
             return BadRequest(new { message = "El correo ya está registrado en el sistema." });
         }
 
+        var userType = request.UserType.Trim();
+
         var user = new User
         {
-            Rut = request.Rut,
-            Name = request.Name,
-            Email = request.Email,
+            Rut = request.Rut.Trim(),
+            Name = request.Name.Trim(),
+            Email = normalizedEmail,
             PasswordHash = HashPassword(request.Password),
-            UserType = request.UserType,
-            Role = "Cliente"
+            UserType = userType,
+            Role = userType == "Administrador" ? "Admin" : "Cliente"
         };
 
         _context.Users.Add(user);
