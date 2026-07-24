@@ -1,16 +1,16 @@
 <section class="page-shell">
   <header class="section-hero">
-    <p class="section-hero__eyebrow">Schedules & Reservations</p>
+    <p class="section-hero__eyebrow">Horarios y reservas</p>
     <h1>Asegura tu bloque de entrenamiento</h1>
     <p>
-      Selecciona un día y reserva tu cupo en la instalación de alto rendimiento. La capacidad se gestiona
-      para asegurar condiciones óptimas.
+      Selecciona un día y reserva tu cupo en la Sala de Pesas. Cada bloque cuenta con una capacidad
+      máxima de 20 personas.
     </p>
   </header>
 
   <div class="day-tabs">
     <button
-      *ngFor="let day of mockData.scheduleDays"
+      *ngFor="let day of scheduleDays"
       type="button"
       [class.day-tab--active]="selectedDay === day"
       class="day-tab"
@@ -20,15 +20,37 @@
     </button>
   </div>
 
+  <p *ngIf="successMessage" style="color: green;">
+    {{ successMessage }}
+  </p>
+
+  <p *ngIf="errorMessage" style="color: red;">
+    {{ errorMessage }}
+  </p>
+
   <div class="schedule-grid">
-    <article class="slot-card" *ngFor="let slot of mockData.scheduleSlots" [class.slot-card--disabled]="!slot.enabled">
+    <article
+      class="slot-card"
+      *ngFor="let slot of scheduleSlots"
+      [class.slot-card--disabled]="isSlotDisabled(slot)"
+    >
       <div class="slot-card__top">
         <h3>{{ slot.time }}</h3>
-        <app-status-badge [label]="slot.statusLabel" [tone]="slot.statusTone" />
+        <app-status-badge
+          [label]="getStatusLabel(slot)"
+          [tone]="getStatusTone(slot)"
+        />
       </div>
+
       <p class="slot-card__zone">{{ slot.zone }}</p>
-      <p class="slot-card__slots">{{ slot.slots }}</p>
-      <app-ui-button [disabled]="!slot.enabled">{{ slot.actionLabel }}</app-ui-button>
+      <p class="slot-card__slots">{{ getSlotsLabel(slot) }}</p>
+
+      <app-ui-button
+        [disabled]="isSlotDisabled(slot)"
+        (pressed)="reserveSlot(slot)"
+      >
+        {{ getButtonLabel(slot) }}
+      </app-ui-button>
     </article>
   </div>
 </section>

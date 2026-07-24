@@ -97,9 +97,9 @@ export class LoginPageComponent {
         }
 
         if (user.role === 'Admin') {
-          this.auth.loginAsAdmin();
+          this.auth.loginAsAdmin(user.id, user.name, user.email);
         } else {
-          this.auth.loginAsStudent(user.name, user.email);
+          this.auth.loginAsStudent(user.id, user.name, user.email);
         }
 
         void this.router.navigateByUrl(this.auth.activeProfile().landingRoute);
