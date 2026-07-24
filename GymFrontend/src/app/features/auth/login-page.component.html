@@ -5,7 +5,7 @@
       <p>(nombre provisorio)</p>
     </header>
 
-    <div class="field" *ngIf="selectedRole === 'student'">
+    <div class="field">
       <label for="rut">RUT</label>
       <input
         id="rut"
@@ -21,6 +21,7 @@
       <input
         id="email"
         type="email"
+        placeholder="Ej: usuario@ucn.cl"
         [(ngModel)]="email"
         name="email"
       />
@@ -45,7 +46,7 @@
     </p>
 
     <div class="role-switch">
-      <p>Perfil demo</p>
+      <p>Perfil</p>
       <div class="role-switch__buttons">
         <button
           type="button"
@@ -55,6 +56,7 @@
         >
           Estudiante
         </button>
+
         <button
           type="button"
           class="role-chip"
@@ -68,7 +70,9 @@
 
     <p class="session-preview">
       Ingresarás como:
-      <strong>{{ selectedRole === 'admin' ? 'Admin' : (studentName.trim() || 'Usuario') }}</strong>
+      <strong>
+        {{ selectedRole === 'admin' ? 'Administrador' : (studentName.trim() || 'Usuario') }}
+      </strong>
     </p>
 
     <app-ui-button
@@ -79,6 +83,9 @@
       {{ isLoading ? 'Ingresando...' : 'Ingresar' }}
     </app-ui-button>
 
-    <p class="support">¿No tienes cuenta? <a href="#">Contacta al administrador</a></p>
+    <p class="support">
+      ¿No tienes cuenta?
+      <a href="#">Contacta al administrador</a>
+    </p>
   </div>
 </section>

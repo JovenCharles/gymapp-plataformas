@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 export interface LoginRequest {
   rut: string;
+  email: string;
   password: string;
 }
 
@@ -29,5 +30,9 @@ export class AuthApiService {
 
   register(data: RegisterRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, data);
+  }
+
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/users`);
   }
 }

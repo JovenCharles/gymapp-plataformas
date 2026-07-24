@@ -80,10 +80,24 @@ public class AuthController : ControllerBase
             return BadRequest(new { message = "El RUT debe tener entre 8 y 9 dígitos, sin puntos ni guion." });
         }
 
+        if (string.IsNullOrWhiteSpace(request.Email))
+        {
+            return BadRequest(new { message = "El correo es obligatorio." });
+        }
+
+        if (string.IsNullOrWhiteSpace(request.Password))
+        {
+            return BadRequest(new { message = "La contraseña es obligatoria." });
+        }
+
+        var normalizedEmail = request.Email.Trim().ToLower();
         var passwordHash = HashPassword(request.Password);
 
         var user = await _context.Users
-            .FirstOrDefaultAsync(u => u.Rut == request.Rut && u.PasswordHash == passwordHash);
+            .FirstOrDefaultAsync(u =>
+                u.Rut == request.Rut &&
+                u.Email.ToLower() == normalizedEmail &&
+                u.PasswordHash == passwordHash);
 
         if (user == null)
         {

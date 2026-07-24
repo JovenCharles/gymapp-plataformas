@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
 import { AppRole, MockAuthService } from '../../core/services/mock-auth.service';
 import { AuthApiService } from '../../core/services/auth-api.service';
 import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.component';
@@ -15,7 +16,7 @@ import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.c
 export class LoginPageComponent {
   protected selectedRole: AppRole = 'student';
 
-  // Este campo ahora lo usaremos como RUT
+  // Este campo se usa como RUT
   protected studentName = '';
 
   protected email = 'athlete@university.edu';
@@ -28,6 +29,7 @@ export class LoginPageComponent {
     private readonly router: Router,
     private readonly auth: MockAuthService,
     private readonly authApi: AuthApiService,
+    private readonly cdr: ChangeDetectorRef,
   ) {
     const currentProfile = this.auth.activeProfile();
 
@@ -40,6 +42,7 @@ export class LoginPageComponent {
 
   protected pickRole(role: AppRole): void {
     this.selectedRole = role;
+    this.errorMessage = '';
 
     if (role === 'admin') {
       this.email = 'admin@gymaster.edu';
@@ -54,40 +57,45 @@ export class LoginPageComponent {
   protected enter(): void {
     this.errorMessage = '';
 
-    // Para administrador mantenemos el login demo del frontend
-    // Esto permite entrar al panel de administración y probar gestión de usuarios.
-    if (this.selectedRole === 'admin') {
-      this.auth.loginAsAdmin();
-      void this.router.navigateByUrl(this.auth.activeProfile().landingRoute);
-      return;
-    }
-
-    // Para estudiantes usamos el backend real con RUT + contraseña
     const rut = this.studentName.trim();
+    const email = this.email.trim();
 
-    if (!rut || !this.password) {
-      this.errorMessage = 'Debes ingresar RUT y contraseña.';
+    if (!rut || !email || !this.password) {
+      this.errorMessage = 'Debes ingresar RUT, correo y contraseña.';
+      this.cdr.detectChanges();
       return;
     }
 
     this.isLoading = true;
+    this.cdr.detectChanges();
 
     this.authApi.login({
       rut,
+      email,
       password: this.password,
-    }).subscribe({
+    })
+    .pipe(
+      finalize(() => {
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      })
+    )
+    .subscribe({
       next: (response) => {
         const user = response.user;
 
-        this.auth.loginAsStudent(user.name, user.email);
-
-        this.isLoading = false;
+        if (user.role === 'Admin') {
+          this.auth.loginAsAdmin();
+        } else {
+          this.auth.loginAsStudent(user.name, user.email);
+        }
 
         void this.router.navigateByUrl(this.auth.activeProfile().landingRoute);
       },
-      error: () => {
-        this.isLoading = false;
-        this.errorMessage = 'Credenciales incorrectas.';
+      error: (error) => {
+        console.error('Error de login:', error);
+        this.errorMessage = error?.error?.message || 'Credenciales incorrectas.';
+        this.cdr.detectChanges();
       }
     });
   }
