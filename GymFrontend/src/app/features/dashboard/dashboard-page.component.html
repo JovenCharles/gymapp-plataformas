@@ -1,33 +1,35 @@
 <section class="panel blocks-section">
   <div class="blocks-header">
     <div>
-      <h3>Próximos bloques libres</h3>
-      <p>Horarios disponibles para reserva hoy en Sala de Pesas.</p>
+      <p class="eyebrow">Mi actividad</p>
+      <h3>Mis reservas</h3>
+      <p>Información registrada en la base de datos.</p>
     </div>
 
     <a routerLink="/schedules" class="link-reset">
       <app-ui-button variant="secondary" size="sm">
-        Ver agenda completa
+        Ver horarios
       </app-ui-button>
     </a>
   </div>
 
+  <p *ngIf="isLoading">Cargando reservas...</p>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  <p *ngIf="!isLoading && !errorMessage && activeReservations.length === 0">
+    No tienes reservas activas registradas.
+  </p>
+
   <article
     class="block-item"
-    *ngFor="let block of upcomingBlocks; let i = index"
-    [class.block-item--accent]="i === 0"
+    *ngFor="let reservation of activeReservations"
   >
-    <div class="block-item__date">{{ block.date }}</div>
+    <div class="block-item__date">{{ reservation.day }}</div>
 
     <div class="block-item__content">
-      <h4>{{ block.activity }}</h4>
-      <p>{{ block.time }}</p>
+      <h4>{{ reservation.zone }}</h4>
+      <p>{{ reservation.startTime }} - {{ reservation.endTime }}</p>
     </div>
 
-    <a routerLink="/schedules" class="link-reset">
-      <app-ui-button [disabled]="!block.enabled">
-        Reservar
-      </app-ui-button>
-    </a>
+    <app-status-badge label="Reservado" tone="success" />
   </article>
 </section>

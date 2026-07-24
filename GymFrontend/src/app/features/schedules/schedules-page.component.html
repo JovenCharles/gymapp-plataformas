@@ -3,8 +3,7 @@
     <p class="section-hero__eyebrow">Horarios y reservas</p>
     <h1>Asegura tu bloque de entrenamiento</h1>
     <p>
-      Selecciona un día y reserva tu cupo en la Sala de Pesas. Cada bloque cuenta con una capacidad
-      máxima de 20 personas.
+       Selecciona un día y reserva tu cupo según la disponibilidad registrada en el sistema.
     </p>
   </header>
 
@@ -31,11 +30,11 @@
   <div class="schedule-grid">
     <article
       class="slot-card"
-      *ngFor="let slot of scheduleSlots"
+      *ngFor="let slot of visibleSlots"
       [class.slot-card--disabled]="isSlotDisabled(slot)"
     >
       <div class="slot-card__top">
-        <h3>{{ slot.time }}</h3>
+         <h3>{{ slot.startTime }} - {{ slot.endTime }}</h3>
         <app-status-badge
           [label]="getStatusLabel(slot)"
           [tone]="getStatusTone(slot)"
@@ -49,8 +48,12 @@
         [disabled]="isSlotDisabled(slot)"
         (pressed)="reserveSlot(slot)"
       >
-        {{ getButtonLabel(slot) }}
+         {{ getButtonLabel(slot) }}
       </app-ui-button>
     </article>
   </div>
+
+  <p *ngIf="!isLoading && visibleSlots.length === 0">
+    No hay bloques disponibles para este día.
+  </p>
 </section>

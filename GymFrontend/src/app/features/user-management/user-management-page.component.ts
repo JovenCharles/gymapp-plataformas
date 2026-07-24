@@ -18,10 +18,9 @@ export class UserManagementPageComponent implements OnInit {
     { key: 'id', label: 'RUT / ID' },
     { key: 'type', label: 'Tipo' },
     { key: 'status', label: 'Estado', type: 'badge' },
-    { key: 'actions', label: 'Acciones', align: 'right' },
   ];
 
-  protected rows: any[] = [];
+  protected rows: Record<string, unknown>[] = [];
 
   protected showCreateForm = false;
 
@@ -125,9 +124,7 @@ export class UserManagementPageComponent implements OnInit {
       )
       .subscribe({
         next: (users) => {
-          console.log('Usuarios cargados desde backend:', users);
-
-          this.rows = users.map((user) => ({
+           this.rows = users.map((user) => ({
             user: {
               title: user.name,
               subtitle: user.email,
@@ -138,8 +135,7 @@ export class UserManagementPageComponent implements OnInit {
               label: 'Activo',
               tone: 'success',
             },
-            actions: 'Ver · Editar',
-          }));
+           }));
 
           this.cdr.detectChanges();
         },

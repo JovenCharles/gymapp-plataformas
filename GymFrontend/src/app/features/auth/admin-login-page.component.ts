@@ -8,13 +8,13 @@ import { AuthService } from '../../core/services/auth.service';
 import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.component';
 
 @Component({
-  selector: 'app-login-page',
+  selector: 'app-admin-login-page',
   imports: [CommonModule, FormsModule, RouterLink, UiButtonComponent],
-  templateUrl: './login-page.component.html',
+  templateUrl: './admin-login-page.component.html',
   styleUrl: './login-page.component.scss',
 })
-export class LoginPageComponent {
-  protected rut = '';
+export class AdminLoginPageComponent {
+  protected username = '';
   protected password = '';
   protected errorMessage = '';
   protected isLoading = false;
@@ -28,21 +28,21 @@ export class LoginPageComponent {
   protected enter(): void {
     this.errorMessage = '';
 
-    const rut = this.rut.trim();
+    const username = this.username.trim();
 
-    if (!rut || !this.password) {
-      this.errorMessage = 'Debes ingresar RUT y contraseña.';
+    if (!username || !this.password) {
+      this.errorMessage = 'Debes ingresar usuario y contraseña.';
       return;
     }
 
     this.isLoading = true;
 
-    this.authApi.login({ rut, password: this.password })
+    this.authApi.adminLogin({ username, password: this.password })
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: (response) => {
           this.auth.login(response);
-          void this.router.navigateByUrl('/dashboard');
+          void this.router.navigateByUrl('/admin-dashboard');
         },
         error: (error) => {
           this.errorMessage = error?.error?.message || 'No se pudo iniciar sesión.';

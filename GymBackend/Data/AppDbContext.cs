@@ -12,4 +12,6 @@ public class AppDbContext : DbContext
     public DbSet<User> Users => Set<User>();
 
     public DbSet<Reservation> Reservations => Set<Reservation>();
+
+    public DbSet<ScheduleSlot> ScheduleSlots => Set<ScheduleSlot>();
 }

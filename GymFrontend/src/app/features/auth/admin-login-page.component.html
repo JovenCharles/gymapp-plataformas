@@ -2,18 +2,18 @@
   <div class="login-card">
     <header>
       <h1>GyMaster</h1>
-      <p>Acceso de usuarios</p>
+      <p>Portal administrativo</p>
     </header>
 
     <form (ngSubmit)="enter()">
       <div class="field">
-        <label for="rut">RUT</label>
+        <label for="username">Usuario</label>
         <input
-          id="rut"
+          id="username"
           type="text"
-          placeholder="Ej: 123456789"
-          [(ngModel)]="rut"
-          name="rut"
+          placeholder="Ingresa tu usuario"
+          [(ngModel)]="username"
+          name="username"
           autocomplete="username"
           required
         />
@@ -42,13 +42,13 @@
         [fullWidth]="true"
         [disabled]="isLoading"
       >
-        {{ isLoading ? 'Ingresando...' : 'Ingresar' }}
+        {{ isLoading ? 'Ingresando...' : 'Ingresar como administrador' }}
       </app-ui-button>
     </form>
 
     <p class="support">
-      ¿Eres administrador?
-      <a routerLink="/admin">Ingresar al portal administrativo</a>
+      ¿No eres administrador?
+      <a routerLink="/login">Volver al acceso de usuarios</a>
     </p>
   </div>
 </section>

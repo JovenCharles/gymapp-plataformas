@@ -3,12 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface CreateReservationRequest {
-  userId: number;
   day: string;
   startTime: string;
   endTime: string;
   zone: string;
-  capacity: number;
 }
 
 export interface Reservation {
@@ -28,7 +26,7 @@ export interface Reservation {
   providedIn: 'root'
 })
 export class ReservationApiService {
-  private readonly apiUrl = 'http://localhost:5008/api/Reservations';
+  private readonly apiUrl = '/api/Reservations';
 
   constructor(private readonly http: HttpClient) {}
 
@@ -40,11 +38,11 @@ export class ReservationApiService {
     return this.http.get<Reservation[]>(`${this.apiUrl}/user/${userId}`);
   }
 
-  createReservation(data: CreateReservationRequest): Observable<any> {
-    return this.http.post(this.apiUrl, data);
+  createReservation(data: CreateReservationRequest): Observable<{ message: string; reservation: Reservation }> {
+    return this.http.post<{ message: string; reservation: Reservation }>(this.apiUrl, data);
   }
 
-  cancelReservation(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  cancelReservation(id: number): Observable<{ message: string; reservation: Reservation }> {
+    return this.http.delete<{ message: string; reservation: Reservation }>(`${this.apiUrl}/${id}`);
   }
 }

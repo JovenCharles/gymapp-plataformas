@@ -42,20 +42,19 @@
   gap: 0.5rem;
 }
 
-.profile-grid {
+.info-card h2 {
+  margin-top: 0;
+  font-size: 2.1rem;
+}
+
+.profile-data-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
 
-.info-card h2,
-.prefs-card h2 {
-  margin-top: 0;
-  font-size: 2.1rem;
-}
-
 .info-card p {
-  margin: 1.2rem 0 0;
+  margin: 0;
   color: var(--text-soft);
   display: grid;
   gap: 0.25rem;
@@ -68,45 +67,9 @@
   color: var(--text-muted);
 }
 
-.prefs-card label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.8rem;
-}
-
-.prefs-card label + label {
-  margin-top: 1.25rem;
-}
-
-.prefs-card strong {
-  display: block;
-  margin-bottom: 0.25rem;
-}
-
-.prefs-card span {
-  color: var(--text-soft);
-}
-
-.prefs-card input {
-  width: 2.95rem;
-  height: 1.7rem;
-  border-radius: 999px;
-}
-
-.profile-footer {
-  display: flex;
-  justify-content: flex-end;
-}
-
-@media (max-width: 1080px) {
-  .profile-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 740px) {
-  .profile-hero {
+  .profile-hero,
+  .profile-data-grid {
     grid-template-columns: 1fr;
   }
 }

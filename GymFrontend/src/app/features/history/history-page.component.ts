@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs';
-import { MockAuthService } from '../../core/services/mock-auth.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Reservation, ReservationApiService } from '../../core/services/reservation-api.service';
 import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
 import { StatCardComponent } from '../../shared/components/stat-card/stat-card.component';
@@ -22,7 +22,7 @@ export class HistoryPageComponent implements OnInit {
   protected isCanceling = false;
 
   constructor(
-    private readonly auth: MockAuthService,
+    private readonly auth: AuthService,
     private readonly reservationApi: ReservationApiService,
     private readonly cdr: ChangeDetectorRef,
   ) {}

@@ -129,6 +129,23 @@
   font-size: 0.84rem;
 }
 
+.logout-button {
+  margin-top: 0.85rem;
+  border: 1px solid var(--stroke);
+  border-radius: 0.75rem;
+  padding: 0.7rem 0.8rem;
+  background: #fff;
+  color: var(--text-soft);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  color: var(--brand);
+  border-color: var(--brand);
+}
+
 @media (max-width: 1024px) {
   .sidebar {
     position: fixed;

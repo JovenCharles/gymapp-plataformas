@@ -12,6 +12,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/login-page.component').then((m) => m.LoginPageComponent),
   },
   {
+    path: 'admin',
+    loadComponent: () =>
+      import('./features/auth/admin-login-page.component').then((m) => m.AdminLoginPageComponent),
+  },
+  {
     path: '',
     loadComponent: () =>
       import('./core/layout/main-layout/main-layout.component').then((m) => m.MainLayoutComponent),
@@ -32,12 +37,6 @@ export const routes: Routes = [
         canActivate: [roleGuard(['student', 'admin'])],
         loadComponent: () =>
           import('./features/schedules/schedules-page.component').then((m) => m.SchedulesPageComponent),
-      },
-      {
-        path: 'qr-access',
-        canActivate: [roleGuard(['student', 'admin'])],
-        loadComponent: () =>
-          import('./features/qr-access/qr-access-page.component').then((m) => m.QrAccessPageComponent),
       },
       {
         path: 'history',

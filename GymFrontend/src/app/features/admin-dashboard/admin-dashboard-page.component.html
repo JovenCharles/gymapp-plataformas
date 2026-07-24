@@ -1,15 +1,18 @@
 <section class="page-shell">
   <header class="admin-header">
     <div>
-      <p class="eyebrow">Facility Overview</p>
-      <h1>System Status</h1>
+      <p class="eyebrow">Administración</p>
+      <h1>Estado del sistema</h1>
+      <p>Información calculada a partir de los registros de PostgreSQL.</p>
     </div>
-    <app-status-badge label="Live feed activo" tone="primary" />
   </header>
 
-  <div class="admin-stats">
+  <p *ngIf="isLoading">Cargando información...</p>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+  <div class="admin-stats" *ngIf="!isLoading && !errorMessage">
     <app-stat-card
-      *ngFor="let stat of mockData.adminStats; let first = first"
+      *ngFor="let stat of stats; let first = first"
       [title]="stat.title"
       [value]="stat.value"
       [helper]="stat.helper"
@@ -17,16 +20,23 @@
     />
   </div>
 
-  <section class="panel access-panel">
-    <h2>Accesos recientes</h2>
+  <section class="panel access-panel" *ngIf="!isLoading && !errorMessage">
+    <h2>Reservas recientes</h2>
 
-    <article class="access-item" *ngFor="let access of mockData.recentAccess">
+    <p *ngIf="recentReservations.length === 0">
+      No hay reservas registradas.
+    </p>
+
+    <article class="access-item" *ngFor="let reservation of recentReservations">
       <div>
-        <h3>{{ access.name }}</h3>
-        <p>{{ access.detail }}</p>
+        <h3>{{ reservation.userName }}</h3>
+        <p>{{ reservation.day }} · {{ reservation.zone }} · {{ reservation.startTime }} - {{ reservation.endTime }}</p>
       </div>
-      <p class="access-item__time">{{ access.timeAgo }}</p>
-      <app-status-badge [label]="access.status" [tone]="access.tone" />
+      <p class="access-item__time">{{ reservation.createdAt | date:'dd/MM/yyyy HH:mm' }}</p>
+      <app-status-badge
+        [label]="reservation.status"
+        [tone]="getStatusTone(reservation.status)"
+      />
     </article>
   </section>
 </section>

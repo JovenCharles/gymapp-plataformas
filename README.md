@@ -4,9 +4,9 @@ El sistema corresponde a una aplicación web para la gestión de usuarios y acce
 
 ## Tecnologías utilizadas
 
-* Frontend: Angular 20
+* Frontend: Angular 21
 * Backend: .NET 10 Web API
-* Base de datos: SQLite
+* Base de datos: PostgreSQL
 * Contenedores: Docker y Docker Compose
 * Servidor frontend: Nginx
 
@@ -72,6 +72,12 @@ Frontend:
 http://localhost:4200
 ```
 
+Portal administrativo:
+
+```txt
+http://localhost:4200/admin
+```
+
 Backend / Swagger:
 
 ```txt
@@ -81,7 +87,7 @@ http://localhost:5008/swagger
 ## Flujo de prueba
 
 1. Abrir el frontend en `http://localhost:4200`.
-2. Ingresar como administrador usando el perfil demo.
+2. Ingresar al portal administrativo desde `/admin`.
 3. Entrar a la sección **Gestión de Usuarios**.
 4. Crear un usuario con RUT, nombre, correo, contraseña y tipo de usuario.
 5. Volver al login.
@@ -92,12 +98,18 @@ http://localhost:5008/swagger
 ```txt
 POST /api/Auth/register
 POST /api/Auth/login
+POST /api/Auth/admin-login
 GET  /api/Auth/users
+GET  /api/Schedules
+GET  /api/Reservations
+GET  /api/Reservations/user/{userId}
+POST /api/Reservations
+DELETE /api/Reservations/{id}
 ```
 
 ## Notas importantes
 
-La base de datos SQLite se crea automáticamente al iniciar el backend si no existe previamente.
+La base de datos PostgreSQL y los bloques horarios se crean automáticamente al iniciar el backend si no existen previamente.
 
 En ambiente Docker, los usuarios deben registrarse nuevamente si se elimina el contenedor o la base de datos generada.
 

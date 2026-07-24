@@ -2,21 +2,22 @@
   <div class="shell__overlay" *ngIf="mobileMenuOpen()" (click)="closeMobileMenu()"></div>
 
   <app-sidebar
-    [platformName]="mockData.platformName"
-    [platformSubtitle]="mockData.platformSubtitle"
-    [userNav]="mockData.userNav"
+    [platformName]="platformName"
+    [platformSubtitle]="platformSubtitle"
+    [userNav]="userNav"
     [adminNav]="visibleAdminNav()"
     [profileName]="sidebarProfile().name"
     [profileRole]="sidebarProfile().roleLabel"
     [profileCode]="sidebarProfile().code"
     [open]="mobileMenuOpen()"
     (navigated)="closeMobileMenu()"
+    (loggedOut)="logout()"
   />
 
   <div class="shell__content">
     <header class="mobile-header">
       <button type="button" class="mobile-header__menu" (click)="toggleMobileMenu()">Menu</button>
-      <p>{{ mockData.platformName }}</p>
+      <p>{{ platformName }}</p>
       <small>{{ sidebarProfile().roleLabel }}</small>
     </header>
 

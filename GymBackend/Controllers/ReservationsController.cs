@@ -1,12 +1,15 @@
 using GymBackend.Data;
 using GymBackend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace GymBackend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class ReservationsController : ControllerBase
 {
     private readonly AppDbContext _context;
@@ -17,10 +20,11 @@ public class ReservationsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetReservations()
     {
         var reservations = await _context.Reservations
-            .OrderByDescending(r => r.CreatedAt)
+            .OrderByDescending(reservation => reservation.CreatedAt)
             .ToListAsync();
 
         return Ok(reservations);
@@ -29,9 +33,14 @@ public class ReservationsController : ControllerBase
     [HttpGet("user/{userId}")]
     public async Task<IActionResult> GetReservationsByUser(int userId)
     {
+        if (!User.IsInRole("Admin") && CurrentUserId() != userId)
+        {
+            return Forbid();
+        }
+
         var reservations = await _context.Reservations
-            .Where(r => r.UserId == userId)
-            .OrderByDescending(r => r.CreatedAt)
+            .Where(reservation => reservation.UserId == userId)
+            .OrderByDescending(reservation => reservation.CreatedAt)
             .ToListAsync();
 
         return Ok(reservations);
@@ -40,35 +49,50 @@ public class ReservationsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateReservation(CreateReservationRequest request)
     {
-        var user = await _context.Users.FindAsync(request.UserId);
+        var userId = CurrentUserId();
+        var day = request.Day.Trim();
+        var startTime = request.StartTime.Trim();
+        var endTime = request.EndTime.Trim();
+        var zone = request.Zone.Trim();
 
-        if (user == null)
+        var schedule = await _context.ScheduleSlots.FirstOrDefaultAsync(slot =>
+            slot.Day == day &&
+            slot.StartTime == startTime &&
+            slot.EndTime == endTime &&
+            slot.Zone == zone &&
+            slot.Enabled);
+
+        if (schedule is null)
         {
-            return NotFound(new { message = "Usuario no encontrado." });
+            return BadRequest(new { message = "El bloque seleccionado no está disponible." });
         }
 
-        var capacity = request.Capacity <= 0 ? 20 : request.Capacity;
+        var user = await _context.Users.FindAsync(userId);
 
-        var reservedCount = await _context.Reservations
-            .CountAsync(r =>
-                r.Day == request.Day &&
-                r.StartTime == request.StartTime &&
-                r.EndTime == request.EndTime &&
-                r.Zone == request.Zone &&
-                r.Status == "Reservado");
+        if (user is null)
+        {
+            return Unauthorized(new { message = "La sesión no corresponde a un usuario válido." });
+        }
 
-        if (reservedCount >= capacity)
+        var reservedCount = await _context.Reservations.CountAsync(reservation =>
+            reservation.Day == day &&
+            reservation.StartTime == startTime &&
+            reservation.EndTime == endTime &&
+            reservation.Zone == zone &&
+            reservation.Status == "Reservado");
+
+        if (reservedCount >= schedule.Capacity)
         {
             return BadRequest(new { message = "No quedan cupos disponibles para este bloque." });
         }
 
-        var alreadyReserved = await _context.Reservations
-            .AnyAsync(r =>
-                r.UserId == request.UserId &&
-                r.Day == request.Day &&
-                r.StartTime == request.StartTime &&
-                r.EndTime == request.EndTime &&
-                r.Status == "Reservado");
+        var alreadyReserved = await _context.Reservations.AnyAsync(reservation =>
+            reservation.UserId == userId &&
+            reservation.Day == day &&
+            reservation.StartTime == startTime &&
+            reservation.EndTime == endTime &&
+            reservation.Zone == zone &&
+            reservation.Status == "Reservado");
 
         if (alreadyReserved)
         {
@@ -79,13 +103,13 @@ public class ReservationsController : ControllerBase
         {
             UserId = user.Id,
             UserName = user.Name,
-            Day = request.Day.Trim(),
-            StartTime = request.StartTime.Trim(),
-            EndTime = request.EndTime.Trim(),
-            Zone = string.IsNullOrWhiteSpace(request.Zone) ? "Sala de Pesas" : request.Zone.Trim(),
-            Capacity = capacity,
+            Day = day,
+            StartTime = startTime,
+            EndTime = endTime,
+            Zone = zone,
+            Capacity = schedule.Capacity,
             Status = "Reservado",
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow,
         };
 
         _context.Reservations.Add(reservation);
@@ -94,7 +118,7 @@ public class ReservationsController : ControllerBase
         return Ok(new
         {
             message = "Reserva creada correctamente.",
-            reservation
+            reservation,
         });
     }
 
@@ -103,9 +127,14 @@ public class ReservationsController : ControllerBase
     {
         var reservation = await _context.Reservations.FindAsync(id);
 
-        if (reservation == null)
+        if (reservation is null)
         {
             return NotFound(new { message = "Reserva no encontrada." });
+        }
+
+        if (!User.IsInRole("Admin") && reservation.UserId != CurrentUserId())
+        {
+            return Forbid();
         }
 
         reservation.Status = "Cancelado";
@@ -114,15 +143,22 @@ public class ReservationsController : ControllerBase
         return Ok(new
         {
             message = "Reserva cancelada correctamente.",
-            reservation
+            reservation,
         });
+    }
+
+    private int CurrentUserId()
+    {
+        var value = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        return int.TryParse(value, out var userId)
+            ? userId
+            : throw new UnauthorizedAccessException("La sesión no contiene un usuario válido.");
     }
 }
 
 public class CreateReservationRequest
 {
-    public int UserId { get; set; }
-
     public string Day { get; set; } = string.Empty;
 
     public string StartTime { get; set; } = string.Empty;
@@ -130,6 +166,4 @@ public class CreateReservationRequest
     public string EndTime { get; set; } = string.Empty;
 
     public string Zone { get; set; } = "Sala de Pesas";
-
-    public int Capacity { get; set; } = 20;
 }

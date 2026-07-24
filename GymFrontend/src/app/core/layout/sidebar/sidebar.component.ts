@@ -20,8 +20,13 @@ export class SidebarComponent {
   @Input() profileCode = '';
 
   @Output() navigated = new EventEmitter<void>();
+  @Output() loggedOut = new EventEmitter<void>();
 
   onNavigate(): void {
     this.navigated.emit();
+  }
+
+  onLogout(): void {
+    this.loggedOut.emit();
   }
 }
