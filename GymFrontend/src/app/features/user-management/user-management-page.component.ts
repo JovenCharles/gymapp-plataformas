@@ -6,6 +6,19 @@ import { AuthApiService } from '../../core/services/auth-api.service';
 import { SimpleTableComponent, TableColumn } from '../../shared/components/simple-table/simple-table.component';
 import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.component';
 
+interface UserManagementRow extends Record<string, unknown> {
+  user: {
+    title: string;
+    subtitle: string;
+  };
+  id: string;
+  type: string;
+  status: {
+    label: string;
+    tone: 'success' | 'warning' | 'danger' | 'neutral';
+  };
+}
+
 @Component({
   selector: 'app-user-management-page',
   imports: [CommonModule, FormsModule, UiButtonComponent, SimpleTableComponent],
@@ -20,7 +33,14 @@ export class UserManagementPageComponent implements OnInit {
     { key: 'status', label: 'Estado', type: 'badge' },
   ];
 
-  protected rows: Record<string, unknown>[] = [];
+  protected rows: UserManagementRow[] = [];
+
+  protected searchTerm = '';
+  protected selectedType = 'Todos los tipos';
+  protected selectedStatus = 'Todos los estados';
+
+  protected currentPage = 1;
+  protected readonly pageSize = 5;
 
   protected showCreateForm = false;
 
@@ -46,10 +66,66 @@ export class UserManagementPageComponent implements OnInit {
     this.loadUsers();
   }
 
+  protected get filteredRows(): UserManagementRow[] {
+    const search = this.searchTerm.trim().toLowerCase();
+
+    return this.rows.filter((row) => {
+      const matchesSearch =
+        !search ||
+        row.user.title.toLowerCase().includes(search) ||
+        row.user.subtitle.toLowerCase().includes(search) ||
+        row.id.toLowerCase().includes(search);
+
+      const matchesType =
+        this.selectedType === 'Todos los tipos' ||
+        row.type === this.selectedType;
+
+      const matchesStatus =
+        this.selectedStatus === 'Todos los estados' ||
+        row.status.label === this.selectedStatus;
+
+      return matchesSearch && matchesType && matchesStatus;
+    });
+  }
+
+  protected get paginatedRows(): UserManagementRow[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.filteredRows.slice(start, start + this.pageSize);
+  }
+
+  protected get totalPages(): number {
+    return Math.max(1, Math.ceil(this.filteredRows.length / this.pageSize));
+  }
+
+  protected get pageNumbers(): number[] {
+    return Array.from({ length: this.totalPages }, (_, index) => index + 1);
+  }
+
+  protected get showingLabel(): string {
+    if (this.filteredRows.length === 0) {
+      return 'No hay usuarios que coincidan con los filtros';
+    }
+
+    const start = (this.currentPage - 1) * this.pageSize + 1;
+    const end = Math.min(this.currentPage * this.pageSize, this.filteredRows.length);
+
+    return `Mostrando ${start}-${end} de ${this.filteredRows.length} usuarios`;
+  }
+
   protected toggleCreateForm(): void {
     this.showCreateForm = !this.showCreateForm;
     this.successMessage = '';
     this.errorMessage = '';
+    this.cdr.detectChanges();
+  }
+
+  protected onFiltersChanged(): void {
+    this.currentPage = 1;
+    this.cdr.detectChanges();
+  }
+
+  protected goToPage(page: number): void {
+    this.currentPage = page;
     this.cdr.detectChanges();
   }
 
@@ -99,6 +175,7 @@ export class UserManagementPageComponent implements OnInit {
         };
 
         this.showCreateForm = false;
+        this.currentPage = 1;
         this.loadUsers();
       },
       error: (error) => {
@@ -124,7 +201,7 @@ export class UserManagementPageComponent implements OnInit {
       )
       .subscribe({
         next: (users) => {
-           this.rows = users.map((user) => ({
+          this.rows = users.map((user) => ({
             user: {
               title: user.name,
               subtitle: user.email,
@@ -135,8 +212,9 @@ export class UserManagementPageComponent implements OnInit {
               label: 'Activo',
               tone: 'success',
             },
-           }));
+          }));
 
+          this.currentPage = 1;
           this.cdr.detectChanges();
         },
         error: (error) => {

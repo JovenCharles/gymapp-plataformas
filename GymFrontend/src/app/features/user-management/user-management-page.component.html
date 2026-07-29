@@ -63,6 +63,7 @@
 
     <app-ui-button
       [fullWidth]="false"
+      [disabled]="isLoading"
       (pressed)="createUser()"
     >
       {{ isLoading ? 'Registrando...' : 'Guardar usuario' }}
@@ -70,8 +71,19 @@
   </section>
 
   <section class="panel filters">
-    <input type="text" value="" placeholder="Buscar por nombre, RUT o ID..." />
-    <select>
+    <input
+      type="text"
+      placeholder="Buscar por nombre, RUT o correo..."
+      [(ngModel)]="searchTerm"
+      name="searchTerm"
+      (ngModelChange)="onFiltersChanged()"
+    />
+
+    <select
+      [(ngModel)]="selectedType"
+      name="selectedType"
+      (ngModelChange)="onFiltersChanged()"
+    >
       <option>Todos los tipos</option>
       <option>Estudiante</option>
       <option>Docente</option>
@@ -80,7 +92,12 @@
       <option>Externo</option>
       <option>Administrador</option>
     </select>
-    <select>
+
+    <select
+      [(ngModel)]="selectedStatus"
+      name="selectedStatus"
+      (ngModelChange)="onFiltersChanged()"
+    >
       <option>Todos los estados</option>
       <option>Activo</option>
       <option>Inactivo</option>
@@ -96,18 +113,28 @@
       No hay usuarios registrados.
     </p>
 
+    <p *ngIf="!isLoadingUsers && rows.length > 0 && filteredRows.length === 0">
+      No se encontraron usuarios con los filtros seleccionados.
+    </p>
+
     <app-simple-table
-      *ngIf="!isLoadingUsers && rows.length > 0"
+      *ngIf="!isLoadingUsers && paginatedRows.length > 0"
       [columns]="columns"
-      [rows]="rows"
+      [rows]="paginatedRows"
     />
 
-    <footer>
-      <p>Mostrando usuarios registrados en el sistema</p>
+    <footer *ngIf="!isLoadingUsers && rows.length > 0">
+      <p>{{ showingLabel }}</p>
+
       <div class="pagination">
-        <button type="button" class="active">1</button>
-        <button type="button">2</button>
-        <button type="button">3</button>
+        <button
+          *ngFor="let page of pageNumbers"
+          type="button"
+          [class.active]="currentPage === page"
+          (click)="goToPage(page)"
+        >
+          {{ page }}
+        </button>
       </div>
     </footer>
   </section>
