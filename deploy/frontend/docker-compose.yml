@@ -1,0 +1,7 @@
+services:
+  frontend:
+    image: jovencharles/gymaster-frontend:latest
+    container_name: gymaster-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
