@@ -21,6 +21,8 @@ export class HistoryPageComponent implements OnInit {
   protected isLoading = false;
   protected isCanceling = false;
 
+  protected pendingCancelReservation: Reservation | null = null;
+
   constructor(
     private readonly auth: AuthService,
     private readonly reservationApi: ReservationApiService,
@@ -59,13 +61,33 @@ export class HistoryPageComponent implements OnInit {
     return reservation.status === 'Reservado';
   }
 
-  protected cancelReservation(reservation: Reservation): void {
+  protected requestCancelReservation(reservation: Reservation): void {
     this.successMessage = '';
     this.errorMessage = '';
 
     if (!this.canCancel(reservation)) {
       this.errorMessage = 'Esta reserva ya fue cancelada.';
       this.cdr.detectChanges();
+      return;
+    }
+
+    this.pendingCancelReservation = reservation;
+    this.cdr.detectChanges();
+  }
+
+  protected closeCancelDialog(): void {
+    if (this.isCanceling) {
+      return;
+    }
+
+    this.pendingCancelReservation = null;
+    this.cdr.detectChanges();
+  }
+
+  protected confirmCancelReservation(): void {
+    const reservation = this.pendingCancelReservation;
+
+    if (!reservation) {
       return;
     }
 
@@ -76,6 +98,7 @@ export class HistoryPageComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isCanceling = false;
+          this.pendingCancelReservation = null;
           this.cdr.detectChanges();
         })
       )
