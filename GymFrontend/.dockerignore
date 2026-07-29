@@ -1,5 +1,9 @@
-node_modules/
-dist/
-.angular/
-.vscode/
-.git/
+node_modules
+dist
+.git
+.github
+.angular
+*.md
+.vscode
+.editorconfig
+npm-debug.log
