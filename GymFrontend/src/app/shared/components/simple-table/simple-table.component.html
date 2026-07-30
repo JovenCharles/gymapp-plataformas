@@ -23,6 +23,17 @@
               </div>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'action'">
+              <app-ui-button
+                size="sm"
+                [variant]="asAction(row[column.key]).variant || 'secondary'"
+                [disabled]="asAction(row[column.key]).disabled || false"
+                (pressed)="onActionClick(row, column.key)"
+              >
+                {{ asAction(row[column.key]).label }}
+              </app-ui-button>
+            </ng-container>
+
             <ng-container *ngSwitchDefault>
               {{ row[column.key] }}
             </ng-container>

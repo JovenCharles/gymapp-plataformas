@@ -17,4 +17,6 @@ public class User
     public string UserType { get; set; } = "Estudiante";
 
     public string Role { get; set; } = "Cliente";
+
+    public bool Enabled { get; set; } = true;
 }

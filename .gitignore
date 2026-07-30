@@ -12,6 +12,9 @@ dist/
 # VS Code
 .vscode/
 
+# Claude Code
+.claude/
+
 # Docker / runtime
 *.db-shm
 *.db-wal

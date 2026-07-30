@@ -1,0 +1,27 @@
+.my-qr-header {
+  margin-bottom: 1.5rem;
+}
+
+.qr-panel {
+  display: flex;
+  justify-content: center;
+}
+
+.qr-panel__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.qr-panel__name {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.qr-panel__rut,
+.qr-panel__validity {
+  color: var(--text-soft);
+}

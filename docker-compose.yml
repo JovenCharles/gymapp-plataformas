@@ -21,6 +21,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
+      - TZ=America/Santiago
       - Jwt__Key=gymaster-development-key-change-in-production-2026
       - ConnectionStrings__DefaultConnection=Host=database;Port=5432;Database=gymapp;Username=postgres_bdd;Password=postgres123
     depends_on:

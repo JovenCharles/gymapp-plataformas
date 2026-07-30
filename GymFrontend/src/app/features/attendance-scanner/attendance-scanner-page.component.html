@@ -1,0 +1,55 @@
+<section class="page-shell scanner-page">
+  <header class="scanner-header">
+    <div>
+      <p class="eyebrow">Administración</p>
+      <h1>Control de acceso</h1>
+      <p>Selecciona el tipo de registro y escanea el código QR del usuario con la cámara.</p>
+    </div>
+  </header>
+
+  <section class="panel mode-panel" *ngIf="!mode">
+    <h2>¿Qué deseas registrar?</h2>
+
+    <div class="mode-panel__actions">
+      <app-ui-button size="lg" (pressed)="selectMode('entry')">
+        Registrar entrada
+      </app-ui-button>
+
+      <app-ui-button size="lg" variant="secondary" (pressed)="selectMode('exit')">
+        Registrar salida
+      </app-ui-button>
+    </div>
+  </section>
+
+  <section class="panel scan-panel" *ngIf="mode">
+    <header class="scan-panel__header">
+      <h2>{{ modeLabel }}</h2>
+      <app-ui-button variant="ghost" size="sm" (pressed)="changeMode()">
+        Cambiar tipo de registro
+      </app-ui-button>
+    </header>
+
+    <p *ngIf="cameraError" style="color: red;">
+      {{ cameraError }}
+    </p>
+
+    <div class="scan-panel__camera" [class.scan-panel__camera--hidden]="!isScanning">
+      <div id="qr-reader"></div>
+    </div>
+
+    <app-ui-button *ngIf="!isScanning && !result" (pressed)="startScanning()">
+      Activar cámara
+    </app-ui-button>
+
+    <p *ngIf="isProcessing">
+      Procesando código QR...
+    </p>
+
+    <div class="scan-panel__result" *ngIf="result" [class.scan-panel__result--error]="result.tone === 'error'">
+      <p>{{ result.message }}</p>
+      <app-ui-button (pressed)="changeMode()">
+        Continuar
+      </app-ui-button>
+    </div>
+  </section>
+</section>

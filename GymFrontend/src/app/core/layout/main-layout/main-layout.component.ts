@@ -22,12 +22,14 @@ export class MainLayoutComponent {
     { label: 'Dashboard', route: '/dashboard', icon: 'DB' },
     { label: 'Horarios', route: '/schedules', icon: 'SC' },
     { label: 'Historial', route: '/history', icon: 'HI' },
+    { label: 'Mi Código QR', route: '/my-qr', icon: 'QR' },
     { label: 'Perfil', route: '/profile', icon: 'PR' },
   ];
 
   protected readonly adminNav: NavItem[] = [
     { label: 'Dashboard Admin', route: '/admin-dashboard', icon: 'AD' },
     { label: 'Gestión de Usuarios', route: '/user-management', icon: 'UM' },
+    { label: 'Control de Acceso', route: '/attendance', icon: 'CA' },
   ];
 
   protected readonly visibleAdminNav = computed(() => (this.auth.isAdmin() ? this.adminNav : []));
