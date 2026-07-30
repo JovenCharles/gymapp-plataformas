@@ -87,9 +87,9 @@
             <app-ui-button
               *ngIf="canCancel(reservation)"
               [disabled]="isCanceling"
-              (pressed)="cancelReservation(reservation)"
+              (pressed)="requestCancelReservation(reservation)"
             >
-              {{ isCanceling ? 'Cancelando...' : 'Cancelar' }}
+              Cancelar
             </app-ui-button>
 
             <span *ngIf="!canCancel(reservation)">
@@ -100,4 +100,43 @@
       </tbody>
     </table>
   </section>
+
+  <div
+    class="modal-backdrop"
+    *ngIf="pendingCancelReservation"
+  >
+    <section class="confirm-modal">
+      <p class="confirm-modal__eyebrow">Confirmar cancelación</p>
+
+      <h2>¿Cancelar esta reserva?</h2>
+
+      <p>
+        Estás por cancelar tu reserva del
+        <strong>{{ pendingCancelReservation.day }}</strong>,
+        entre
+        <strong>
+          {{ pendingCancelReservation.startTime }} - {{ pendingCancelReservation.endTime }}
+        </strong>
+        en
+        <strong>{{ pendingCancelReservation.zone }}</strong>.
+      </p>
+
+      <div class="confirm-modal__actions">
+        <app-ui-button
+          variant="secondary"
+          [disabled]="isCanceling"
+          (pressed)="closeCancelDialog()"
+        >
+          Volver
+        </app-ui-button>
+
+        <app-ui-button
+          [disabled]="isCanceling"
+          (pressed)="confirmCancelReservation()"
+        >
+          {{ isCanceling ? 'Cancelando...' : 'Sí, cancelar reserva' }}
+        </app-ui-button>
+      </div>
+    </section>
+  </div>
 </section>

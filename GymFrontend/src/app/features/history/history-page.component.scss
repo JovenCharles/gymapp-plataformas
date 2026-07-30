@@ -142,3 +142,54 @@
     min-width: 760px;
   }
 }
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.38);
+  backdrop-filter: blur(4px);
+}
+
+.confirm-modal {
+  width: min(100%, 34rem);
+  border: 1px solid var(--stroke);
+  border-radius: 1.25rem;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.22);
+  padding: 1.4rem;
+}
+
+.confirm-modal__eyebrow {
+  margin: 0;
+  color: var(--brand);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.confirm-modal h2 {
+  margin: 0.35rem 0 0.7rem;
+  color: var(--text);
+  font-size: 1.55rem;
+}
+
+.confirm-modal p {
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+
+.confirm-modal strong {
+  color: var(--text);
+}
+
+.confirm-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
