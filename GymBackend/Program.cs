@@ -149,10 +149,6 @@ using (var scope = app.Services.CreateScope())
             {
                 Console.WriteLine("Horarios por defecto ya existen.");
             }
-            else
-            {
-                Console.WriteLine("Horarios por defecto ya existen.");
-            }
 
             var fridayTestBlocks = new[]
             {

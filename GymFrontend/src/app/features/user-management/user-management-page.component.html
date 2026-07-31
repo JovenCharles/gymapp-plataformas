@@ -121,6 +121,7 @@
       *ngIf="!isLoadingUsers && paginatedRows.length > 0"
       [columns]="columns"
       [rows]="paginatedRows"
+      (actionClick)="onActionClick($event)"
     />
 
     <footer *ngIf="!isLoadingUsers && rows.length > 0">
