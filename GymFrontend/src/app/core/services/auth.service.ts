@@ -108,6 +108,7 @@ export class AuthService {
           username: user.username ?? '',
           userType: user.userType ?? 'Estudiante',
           role: user.role,
+          enabled: user.enabled ?? true,
         },
       };
     } catch {

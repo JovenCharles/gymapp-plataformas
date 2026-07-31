@@ -1,0 +1,32 @@
+<section class="page-shell my-qr-page">
+  <header class="my-qr-header">
+    <div>
+      <h1>Mi código QR</h1>
+      <p>Muestra este código al administrador para registrar tu entrada o salida de la Sala de Pesas.</p>
+    </div>
+  </header>
+
+  <section class="panel qr-panel">
+    <p *ngIf="isLoading">
+      Generando tu código QR...
+    </p>
+
+    <p *ngIf="errorMessage" style="color: red;">
+      {{ errorMessage }}
+    </p>
+
+    <div class="qr-panel__content" *ngIf="!isLoading && qrCode && qrImageUrl">
+      <img [src]="qrImageUrl" width="260" height="260" alt="Código QR del usuario" />
+
+      <div class="qr-panel__info">
+        <p class="qr-panel__name">{{ qrCode.name }}</p>
+        <p class="qr-panel__rut">RUT {{ qrCode.rut }}</p>
+        <p class="qr-panel__validity">Válido hoy {{ todayLabel }}, de 00:00 a 23:59</p>
+      </div>
+
+      <app-ui-button variant="secondary" (pressed)="loadQrCode()">
+        Actualizar código
+      </app-ui-button>
+    </div>
+  </section>
+</section>

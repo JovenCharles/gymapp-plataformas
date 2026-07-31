@@ -8,6 +8,7 @@ export interface User {
   username: string;
   userType: string;
   role: string;
+  enabled: boolean;
 }
 
 export interface AuthResponse {

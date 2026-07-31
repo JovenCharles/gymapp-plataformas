@@ -1,0 +1,54 @@
+.scanner-header {
+  margin-bottom: 1.5rem;
+}
+
+.mode-panel {
+  text-align: center;
+}
+
+.mode-panel__actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.scan-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.scan-panel__camera {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.scan-panel__camera--hidden {
+  display: none;
+}
+
+#qr-reader {
+  width: 100%;
+  max-width: 360px;
+}
+
+.scan-panel__result {
+  text-align: center;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.scan-panel__result--error {
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.scan-panel__result p {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}

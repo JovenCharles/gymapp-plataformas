@@ -14,4 +14,6 @@ public class AppDbContext : DbContext
     public DbSet<Reservation> Reservations => Set<Reservation>();
 
     public DbSet<ScheduleSlot> ScheduleSlots => Set<ScheduleSlot>();
+
+    public DbSet<Attendance> Attendances => Set<Attendance>();
 }

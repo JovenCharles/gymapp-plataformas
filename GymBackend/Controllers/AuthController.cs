@@ -144,6 +144,32 @@ public class AuthController : ControllerBase
         return Ok(users);
     }
 
+    [HttpPatch("users/{id}/status")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> SetUserStatus(int id, SetUserStatusRequest request)
+    {
+        var user = await _context.Users.FindAsync(id);
+
+        if (user is null)
+        {
+            return NotFound(new { message = "Usuario no encontrado." });
+        }
+
+        if (user.Role == "Admin")
+        {
+            return BadRequest(new { message = "No se puede deshabilitar a un administrador." });
+        }
+
+        user.Enabled = request.Enabled;
+        await _context.SaveChangesAsync();
+
+        return Ok(new
+        {
+            message = user.Enabled ? "Usuario habilitado correctamente." : "Usuario deshabilitado correctamente.",
+            user = ToUserResponse(user),
+        });
+    }
+
     private object CreateAuthResponse(User user, string message)
     {
         var key = _configuration["Jwt:Key"]
@@ -184,6 +210,7 @@ public class AuthController : ControllerBase
         user.Username,
         user.UserType,
         user.Role,
+        user.Enabled,
     };
 
     private static bool IsValidRutFormat(string rut)
@@ -199,4 +226,9 @@ public class AuthController : ControllerBase
 
         return Convert.ToBase64String(hash);
     }
+}
+
+public class SetUserStatusRequest
+{
+    public bool Enabled { get; set; }
 }

@@ -45,9 +45,13 @@ export class HistoryPageComponent implements OnInit {
     return this.reservations.length;
   }
 
-  protected getStatusTone(status: string): 'success' | 'warning' | 'danger' | 'neutral' {
+  protected getStatusTone(status: string): 'primary' | 'success' | 'warning' | 'danger' | 'neutral' {
     if (status === 'Reservado') {
       return 'success';
+    }
+
+    if (status === 'Asistió') {
+      return 'primary';
     }
 
     if (status === 'Cancelado') {
