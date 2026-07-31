@@ -44,4 +44,8 @@ export class AuthApiService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/users`);
   }
+
+  setUserStatus(id: number, enabled: boolean): Observable<{ message: string; user: User }> {
+    return this.http.patch<{ message: string; user: User }>(`${this.apiUrl}/users/${id}/status`, { enabled });
+  }
 }

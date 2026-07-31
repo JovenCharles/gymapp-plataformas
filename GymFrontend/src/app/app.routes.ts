@@ -49,6 +49,11 @@ export const routes: Routes = [
         loadComponent: () => import('./features/profile/profile-page.component').then((m) => m.ProfilePageComponent),
       },
       {
+        path: 'my-qr',
+        canActivate: [roleGuard(['student', 'admin'])],
+        loadComponent: () => import('./features/my-qr/my-qr-page.component').then((m) => m.MyQrPageComponent),
+      },
+      {
         path: 'admin-dashboard',
         canActivate: [roleGuard(['admin'])],
         loadComponent: () =>
@@ -62,6 +67,14 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/user-management/user-management-page.component').then(
             (m) => m.UserManagementPageComponent,
+          ),
+      },
+      {
+        path: 'attendance',
+        canActivate: [roleGuard(['admin'])],
+        loadComponent: () =>
+          import('./features/attendance-scanner/attendance-scanner-page.component').then(
+            (m) => m.AttendanceScannerPageComponent,
           ),
       },
     ],

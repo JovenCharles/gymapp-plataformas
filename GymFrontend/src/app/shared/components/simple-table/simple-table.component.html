@@ -2,13 +2,17 @@
   <table>
     <thead>
       <tr>
-        <th *ngFor="let column of columns" [class]="'align-' + (column.align || 'left')">{{ column.label }}</th>
+        <th *ngFor="let column of columns" [class]="'align-' + (column.align || 'left')">
+          {{ column.label }}
+        </th>
       </tr>
     </thead>
+
     <tbody>
       <tr *ngFor="let row of rows; let i = index" [class.row-highlight]="i < 2">
         <td *ngFor="let column of columns" [class]="'align-' + (column.align || 'left')">
           <ng-container [ngSwitch]="column.type || 'text'">
+            
             <ng-container *ngSwitchCase="'badge'">
               <app-status-badge
                 [label]="asBadge(row[column.key]).label"
@@ -19,13 +23,27 @@
             <ng-container *ngSwitchCase="'stack'">
               <div class="stack-cell">
                 <strong>{{ asStack(row[column.key]).title }}</strong>
-                <small *ngIf="asStack(row[column.key]).subtitle">{{ asStack(row[column.key]).subtitle }}</small>
+                <small *ngIf="asStack(row[column.key]).subtitle">
+                  {{ asStack(row[column.key]).subtitle }}
+                </small>
               </div>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'action'">
+              <app-ui-button
+                size="sm"
+                [variant]="asAction(row[column.key])?.variant || 'secondary'"
+                [disabled]="asAction(row[column.key])?.disabled || false"
+                (pressed)="onActionClick(row, column.key)"
+              >
+                {{ asAction(row[column.key])?.label || 'Acción' }}
+              </app-ui-button>
             </ng-container>
 
             <ng-container *ngSwitchDefault>
               {{ row[column.key] }}
             </ng-container>
+
           </ng-container>
         </td>
       </tr>

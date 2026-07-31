@@ -150,6 +150,98 @@ using (var scope = app.Services.CreateScope())
                 Console.WriteLine("Horarios por defecto ya existen.");
             }
 
+            var fridayTestBlocks = new[]
+            {
+                (Start: "16:15", End: "17:45"),
+                (Start: "18:00", End: "19:30"),
+            };
+
+            foreach (var block in fridayTestBlocks)
+            {
+                var slotExists = await db.ScheduleSlots.AnyAsync(slot =>
+                    slot.Day == "Viernes" && slot.StartTime == block.Start && slot.EndTime == block.End);
+
+                if (!slotExists)
+                {
+                    db.ScheduleSlots.Add(new ScheduleSlot
+                    {
+                        Day = "Viernes",
+                        StartTime = block.Start,
+                        EndTime = block.End,
+                        Zone = "Sala de Pesas",
+                        Capacity = 20,
+                        Enabled = true,
+                    });
+                }
+            }
+
+            await db.SaveChangesAsync();
+
+            var testUserWithAccess = await db.Users.FirstOrDefaultAsync(user => user.Rut == "222222222");
+
+            if (testUserWithAccess is null)
+            {
+                testUserWithAccess = new User
+                {
+                    Rut = "222222222",
+                    Name = "Estudiante Prueba",
+                    Email = "estudiante.prueba@gymaster.edu",
+                    Username = string.Empty,
+                    PasswordHash = HashPassword("123456"),
+                    UserType = "Estudiante",
+                    Role = "Cliente",
+                    Enabled = true,
+                };
+
+                db.Users.Add(testUserWithAccess);
+                await db.SaveChangesAsync();
+            }
+
+            if (!await db.Users.AnyAsync(user => user.Rut == "333333333"))
+            {
+                db.Users.Add(new User
+                {
+                    Rut = "333333333",
+                    Name = "Usuario Sin Reserva",
+                    Email = "usuario.sinreserva@gymaster.edu",
+                    Username = string.Empty,
+                    PasswordHash = HashPassword("123456"),
+                    UserType = "Estudiante",
+                    Role = "Cliente",
+                    Enabled = true,
+                });
+
+                await db.SaveChangesAsync();
+            }
+
+            foreach (var block in fridayTestBlocks)
+            {
+                var hasReservation = await db.Reservations.AnyAsync(reservation =>
+                    reservation.UserId == testUserWithAccess.Id &&
+                    reservation.Day == "Viernes" &&
+                    reservation.StartTime == block.Start &&
+                    reservation.EndTime == block.End &&
+                    reservation.Status == "Reservado");
+
+                if (!hasReservation)
+                {
+                    db.Reservations.Add(new Reservation
+                    {
+                        UserId = testUserWithAccess.Id,
+                        UserName = testUserWithAccess.Name,
+                        Day = "Viernes",
+                        StartTime = block.Start,
+                        EndTime = block.End,
+                        Zone = "Sala de Pesas",
+                        Capacity = 20,
+                        Status = "Reservado",
+                        CreatedAt = DateTime.UtcNow,
+                    });
+                }
+            }
+
+            await db.SaveChangesAsync();
+
             Console.WriteLine("Base de datos inicializada correctamente.");
             break;
         }
